@@ -821,7 +821,10 @@ def render_animation(args, anim_args):
 
             # use transformed previous frame as init for current
             args.use_init = True
-            args.init_sample = noised_sample.half().to(device)
+            if half_precision:
+                args.init_sample = noised_sample.half().to(device)
+            else:
+                args.init_sample = noised_sample.to(device)
             args.strength = max(0.0, min(1.0, strength))
 
         # grab prompt for current frame
